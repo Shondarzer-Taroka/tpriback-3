@@ -19,8 +19,22 @@ try {
         const user=req.body
     console.log(user);
      const loginUser=await services.loginUser(user.email,user.password)  
-     res.status(200).json({message:'user found',loginUser})
+     console.log(loginUser);
+     
+     res.status(200).json({message:'user found',user:loginUser})
 } catch (error) {
     handleError(res,error)
 }
+}
+
+
+export const getAllUsers=async (req:Request,res:Response) => {
+    try {
+        const users=await services.getAllUsers()
+        console.log('d',users);
+        
+        res.status(200).json(users)
+    } catch (error) {
+        handleError(res,error)
+    }
 }

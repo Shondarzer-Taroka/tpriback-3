@@ -36,5 +36,14 @@ export const loginUser=async (email:string,password:string) => {
     }
 
     const token=generateToken(finduser.email,finduser.name,finduser.role)
-    return {finduser,token}
+    return {...finduser,token}
+}
+
+
+
+
+
+
+export const getAllUsers=async () => {
+    return await userModel.getAllUsers()
 }

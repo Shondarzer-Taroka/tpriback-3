@@ -16,6 +16,9 @@ export const createUser=async (userData:Omit<User,'id'|'createdAt'|'updatedAt'>)
 
 
 
+export const getAllUsers=async () => {
+    return prisma.user.findMany()
+}
 
 
 
