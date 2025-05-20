@@ -35,7 +35,7 @@ export const loginUser=async (email:string,password:string) => {
         throw new Error('Invalid creadentials')
     }
 
-    const token=generateToken(finduser.email,finduser.name,finduser.role)
+    const token=await generateToken(finduser.email,finduser.name,finduser.role)
     return {...finduser,token}
 }
 

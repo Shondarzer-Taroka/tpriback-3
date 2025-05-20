@@ -7,7 +7,7 @@ import { Role } from '@prisma/client';
 
 const JWT_SECRET = 'yourtoken'
 export const generateToken = async (email: string, name: string, role: Role) => {
-    const token = jsonwebtoken.sign({ email, name, role }, JWT_SECRET, { expiresIn: '1d' })
+    const token =await jsonwebtoken.sign({ email, name, role }, JWT_SECRET, { expiresIn: '1d' })
     console.log(token);
 
     return token
@@ -44,3 +44,45 @@ export const authenticate = (
 };
 
 
+
+
+
+// export const authorize=async (req:AuthenticatedRequest,res:Response,next:NextFunction) => {
+    
+// }
+
+
+
+
+
+
+
+
+
+export const authorize = (roles: Role[]) => {
+  return (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
+    console.log(req.user);
+    
+    if (!req.user || !roles.includes(req.user.role)) {
+      res.status(403).json({ error: 'Unauthorized access' });
+       return
+    }
+    next();
+  };
+};
+
+
+export const adminCheck=async (req:AuthenticatedRequest,res:Response,next:NextFunction) => {
+    try {
+      
+        console.log(req.user);
+        if (req.user?.role!=='ADMIN') {
+           return res.status(401).json({message:"not allowed access"})
+        }
+
+        next()
+        
+    } catch (error) {
+        
+    }
+}
